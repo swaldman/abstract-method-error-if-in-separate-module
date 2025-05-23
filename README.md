@@ -2,7 +2,7 @@
 
 ## AbstractMethodError, but only if the application is compiled separately from library
 
-Please see the this Scala/Dotty issue. 
+Please see the [this Scala/Dotty issue](https://github.com/scala/scala3/issues/23245).
 
 This issue appears under Scala 3.3.6 and 3.7.0, with `mill` as well as `sbt`.
 
