@@ -15,21 +15,16 @@ This repository is an `sbt` project. It compiles just fine, but if you try to ru
 an `AbstractMethodError` results:
 
 ```plaintext
-[info] compiling 2 Scala sources to /Users/swaldman/Documents/BaseFolders/development/playpen/inheritance-of-nested-traits-sbt/target/scala-3.3.6/classes ...
+[info] compiling 1 Scala source to /Users/swaldman/Documents/BaseFolders/development/playpen/inheritance-of-nested-traits-sbt/target/scala-3.3.6/classes ...
 [info] compiling 1 Scala source to /Users/swaldman/Documents/BaseFolders/development/playpen/inheritance-of-nested-traits-sbt/target/scala-3.3.6/test-classes ...
-[info] running logadapter.test.Hello 
-------------- hello stderr -------------
-Exception in thread "sbt-bg-threads-1" java.lang.AbstractMethodError: Receiver class logadapter.test.Hello$HelloObject$2$ does not define or inherit an implementation of the resolved method 'abstract logadapter.Api logadapter$Api$SelfLogging$$$outer()' of interface logadapter.Api$SelfLogging.
-	at logadapter.Api$SelfLogging.adapter(core.scala:29)
-	at logadapter.Api$SelfLogging.adapter$(core.scala:28)
-	at logadapter.test.Hello$HelloObject$2$.adapter$lzyINIT1(core.scala:7)
-	at logadapter.test.Hello$HelloObject$2$.adapter(core.scala:7)
-	at logadapter.test.Hello$HelloObject$2$.<init>(core.scala:8)
-	at logadapter.test.Hello$.HelloObject$lzyINIT1$1(core.scala:7)
-	at logadapter.test.Hello$.HelloObject$1(core.scala:7)
-	at logadapter.test.Hello$.hello(core.scala:10)
-	at logadapter.test.Hello$.main(core.scala:12)
-	at logadapter.test.Hello.main(core.scala)
+[info] running logadapter.test.Test 
+Exception in thread "sbt-bg-threads-1" java.lang.AbstractMethodError: Receiver class logadapter.test.Test$ does not define or inherit an implementation of the resolved method 'abstract logadapter.AbstractApi logadapter$AbstractApi$SelfLogging$$$outer()' of interface logadapter.AbstractApi$SelfLogging.
+	at logadapter.AbstractApi$SelfLogging.adapter(core.scala:9)
+	at logadapter.AbstractApi$SelfLogging.adapter$(core.scala:8)
+	at logadapter.test.Test$.adapter$lzyINIT1(core.scala:3)
+	at logadapter.test.Test$.adapter(core.scala:3)
+	at logadapter.test.Test$.main(core.scala:5)
+	at logadapter.test.Test.main(core.scala)
 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
 	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
 	at sbt.Run.invokeMain(Run.scala:135)
@@ -45,5 +40,28 @@ Exception in thread "sbt-bg-threads-1" java.lang.AbstractMethodError: Receiver c
 	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1144)
 	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:642)
 	at java.base/java.lang.Thread.run(Thread.java:1583)
-[success] Total time: 2 s, completed May 22, 2025, 10:11:23 PM
+[success] Total time: 2 s, completed May 22, 2025, 11:30:46 PM
 ```
+
+If you go to the root of the repository, and try:
+
+```plaintext
+$ mv src/test/scala/logadapter/test src/main/scala/logadapter
+```
+
+Then the program works fine:
+
+```plaintext
+> run
+[info] running logadapter.test.Test 
+INFO [logadapter.test.Test$] Hello
+[success] Total time: 0 s, completed May 22, 2025, 11:33:37 PM
+```
+
+Move it back...
+
+```plaintext
+$ mv src/main/scala/logadapter/test src/test/scala/logadapter
+```
+
+...and it is broken again.
